@@ -1,0 +1,69 @@
+body {
+    background-color: rgb(212, 231, 229);
+}
+
+.links{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.NavBar-wrapper{
+    display:  flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.router-div{
+    display: flex;
+    flex-direction: row;
+    
+}
+.user-button{
+    width: 200px;
+    height: 80px;
+}
+
+.form-wrapper{
+    display:  flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+.whole-chat-wrapper{
+    display:  flex;
+    flex-direction: column;
+    flex: 1 ;
+}
+
+.chat-box-wrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(173, 76, 89);
+    flex: 1;
+}
+.sent-msg{
+    align-self: flex-end;
+    background-color: rgb(136, 136, 255);
+    padding: 5px 5px;
+    border-radius: 15px;
+    margin: 5px 5px ;
+}
+.userimg{
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.received-msg{ 
+    align-self: flex-start;
+    background-color: white;
+    padding: 5px 5px;
+    border-radius: 15px;
+    margin: 5px 5px ;
+}
+
+.chat-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

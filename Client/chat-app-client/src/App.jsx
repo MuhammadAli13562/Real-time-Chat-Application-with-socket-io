@@ -1,10 +1,10 @@
-import AllChatRoutes from "./components/AllChatRoutes" 
+ import AllChatRoutes from './components/AllChatRoutes'
 
 function App() {
   
   return (
     <div>
-       <AllChatRoutes/>
+      <AllChatRoutes/>
     </div>
   )
 }

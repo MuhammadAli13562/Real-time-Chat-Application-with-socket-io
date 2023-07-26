@@ -1,0 +1,53 @@
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.chat-page-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-selector-wrapper {
+  background-color: pink;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-box-wrapper {
+  background-color: blue;
+  flex: 8;
+  height: 450px;
+  padding-bottom: 4px;
+}
+
+.chat-box-inside-wrapper {
+  overflow-y: auto;
+  height: 400px;
+  padding: "5px 5px 5px 5px";
+  margin-bottom: auto;
+}
+
+.chat-box-message-form-wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
+
+.chat-selector-button {
+  height: 50px;
+}
+
+.chat-box-message-form-textfield {
+  flex: 10;
+}
+
+.chat-box-message-form-button-textfield {
+  flex: 1;
+}

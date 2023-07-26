@@ -112,7 +112,7 @@ io.on("connection", async (socket) => {
     };
     io.in(roomid).emit("room_message", RoomMsg);
     StoreMessageinDB(RoomMsg).then(
-      (MSG) => console.log("Message Stroed in DB", MSG),
+      (MSG) => console.log("Message Stored in DB", MSG),
       (errorMsg) => console.log("Error while Storing : ", errorMsg)
     );
   });

@@ -20,6 +20,7 @@ export default function ChatBox() {
 
   function handleMessageSend() {
     socket.emit("room-message-client", currentMsg, selectedUser);
+    setcurrentMsg("");
   }
 
   useEffect(() => {
@@ -60,9 +61,19 @@ export default function ChatBox() {
         {messages
           .filter((elem) => elem.roomid === selectedUser)
           .map((elem) => {
-            let date = new Date(Number(elem.timestamp));
-            date = date.toLocaleTimeString();
-            return <MessageCard msg={elem} />;
+            if (elem.sendername === localStorage.getItem("username")) {
+              return (
+                <div className="card-wrapper-sender">
+                  <MessageCard msg={elem} />
+                </div>
+              );
+            } else {
+              return (
+                <div className="card-wrapper">
+                  <MessageCard msg={elem} />
+                </div>
+              );
+            }
           })}
         <div ref={chatBoxRef} />
       </div>
@@ -71,11 +82,21 @@ export default function ChatBox() {
           variant="outlined"
           placeholder="Type Message"
           type="text"
+          value={currentMsg}
           onChange={(e) => setcurrentMsg(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              handleMessageSend();
+            }
+          }}
+          sx={{
+            color: "blue",
+          }}
           className="chat-box-message-form-textfield"
         />
         <Button
           variant="contained"
+          size="medium"
           endIcon={<SendIcon />}
           onClick={handleMessageSend}
           className="chat-box-message-form-button-textfield"

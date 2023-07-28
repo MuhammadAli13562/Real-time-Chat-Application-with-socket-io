@@ -20,6 +20,7 @@ export function Login() {
 
     function callback1(response) {
       localStorage.setItem("token", response.headers.token);
+      localStorage.setItem("username", user);
       socket.auth.token = localStorage.getItem("token");
       setmsg("Succesfully Login");
       setdisable(false);

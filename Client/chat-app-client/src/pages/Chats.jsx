@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import ChatSelector from "../components/ChatSelector";
 import { useNavigate } from "react-router-dom";
-import ChatBox from "../components/ChatBox";
+import { ChatBox } from "../components/ChatBox";
 import "../styles/custom.css";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { SelectedUserState } from "../utils/atoms";
 import { socket } from "../utils/socket";
 
 export default function Chats() {

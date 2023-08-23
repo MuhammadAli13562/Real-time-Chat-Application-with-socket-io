@@ -46,8 +46,53 @@ async function StoreMessageinDB(MessageObj) {
   }
 }
 
+async function JoinRoominDB(roomid, userid) {
+  const QuerytoDB = `INSERT INTO room_table (roomid , userid) VALUES ('${roomid}' , '${userid}')`;
+  try {
+    const result = await queryPostgres(QuerytoDB);
+    return result;
+  } catch (error) {
+    console.log("ERROR WHILE JOINING ROOM : ", error.message);
+    throw new Error(error.message);
+  }
+}
+
+async function ExitRoominDB(roomid, userid) {
+  const QuerytoDB = `DELETE FROM room_table WHERE userid='${userid}' AND roomid='${roomid}'`;
+  console.log("quer2db :", QuerytoDB);
+  try {
+    const result = await queryPostgres(QuerytoDB);
+    return result;
+  } catch (error) {
+    console.log("ERROR WHILE DELETING USER FROM ROOM : ", error.message);
+    throw new Error(error.message);
+  }
+}
+
+async function FindRoomParticipantsfromDB(roomArray) {
+  const QuerytoDB = format(
+    `SELECT r.roomid, ARRAY_AGG(u.username ORDER BY u.username) AS usernames
+  FROM room_table r
+  JOIN user_table u ON r.userid = u.userid
+  WHERE r.roomid in (%L)
+  GROUP BY r.roomid`,
+    roomArray
+  );
+
+  try {
+    const result = await queryPostgres(QuerytoDB);
+    console.log("result : ", result.rows);
+    return result.rows;
+  } catch (error) {
+    console.log("error  : ", error.message);
+  }
+}
+
 module.exports = {
   FindRoomsfromDB,
   LoadDefaultMessagesfromDB,
   StoreMessageinDB,
+  JoinRoominDB,
+  ExitRoominDB,
+  FindRoomParticipantsfromDB,
 };

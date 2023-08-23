@@ -1,20 +1,20 @@
-const {Pool} = require('pg')
+const { Pool } = require("pg");
 
 const ClientProps = {
-    host : 'localhost' ,
-    port : 5432 ,
-    database : 'mydb' ,
-    user : 'postgres' ,
-}
+  host: "localhost",
+  port: 5432,
+  database: "mydb",
+  user: "postgres",
+  password: "postgres",
+};
 
 const pool = new Pool(ClientProps);
 
 async function queryPostgres(query) {
-    
-  const client =  await pool.connect()
-  const result =  await client.query(query)
+  const client = await pool.connect();
+  const result = await client.query(query);
   await client.release();
-  return result;   
+  return result;
 }
 
-module.exports = {queryPostgres}
+module.exports = { queryPostgres };

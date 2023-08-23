@@ -16,6 +16,9 @@ const {
   FindRoomsfromDB,
   LoadDefaultMessagesfromDB,
   StoreMessageinDB,
+  JoinRoominDB,
+  ExitRoominDB,
+  FindRoomParticipantsfromDB,
 } = require("./Services/DB/chatTableOps");
 const {
   VerifySocketToken,
@@ -72,31 +75,52 @@ io.on("connection", async (socket) => {
   const username = result?.username;
   const userID = result?.userid;
 
-  ///////////////////////////////////////////////////////////////////////////////////////////
-  //                      ALL DEFAULT HANDLING                          //
+  ///////////////////////////////////////////////////////////////////////
+  //                      DEFAULT HANDLERS                            //
 
-  ////////////////////////////////////////////////////////////////////////
-  //               DEFAULT ROOM JOINING BASED ON USER ID               //
+  async function default_handling() {
+    const roomsObject = await FindRoomsfromDB(socket);
 
-  const roomsObject = await FindRoomsfromDB(socket);
+    if (roomsObject !== -1) {
+      const roomArray = roomsObject.map((elem) => elem.roomid);
+      socket.join(roomArray);
+      socket.emit("default_rooms", roomArray);
 
-  if (roomsObject !== -1) {
-    const roomArray = roomsObject.map((elem) => elem.roomid);
-    socket.join(roomArray);
-    socket.emit("default_rooms", roomArray);
+      const default_participants = await FindRoomParticipantsfromDB(roomArray);
+      socket.emit("default_participants", default_participants);
 
-    //////////////////////////////////////////////////////////////////////
-    //              DEFAULT MESSAGES BASED ON ROOMS AND USER IDs        //
-
-    const default_messages = await LoadDefaultMessagesfromDB(roomArray);
-    socket.emit("default_messages", default_messages);
+      const default_messages = await LoadDefaultMessagesfromDB(roomArray);
+      socket.emit("default_messages", default_messages);
+    }
   }
+
+  ///////////////////////
+  // INITIALIZATION
+  //////////////////////
+
+  default_handling();
 
   ////////////////////////////////////////////////////////////////////////
   //                     SOCKET IO EVENT HANDLING                      //
 
-  socket.on("join-room", (arg) => {
-    socket.join(arg);
+  socket.on("join-room", async (roomID, callback) => {
+    try {
+      await JoinRoominDB(roomID, userID);
+      await default_handling(); // default rooms and messages reloading after joining room
+      callback({ message: "Successfully Joined Room" });
+    } catch (error) {
+      callback({ message: error.message });
+    }
+  });
+
+  socket.on("exit-room", async (roomID, callback) => {
+    try {
+      await ExitRoominDB(roomID, userID);
+      await default_handling(); // default rooms and messages reloading after exiting room
+      callback({ message: "Successfully Exited Room" });
+    } catch (error) {
+      callback({ message: error.message });
+    }
   });
 
   socket.on("room-message-client", (message, roomid) => {

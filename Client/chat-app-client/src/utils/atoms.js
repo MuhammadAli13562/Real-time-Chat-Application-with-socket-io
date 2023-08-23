@@ -1,22 +1,26 @@
 import { atom } from "recoil";
 
 export const MessagesState = atom({
-    key : 'MessagesState',
-    default : []
-})
+  key: "MessagesState",
+  default: [],
+});
 
 export const RoomsState = atom({
-    key : 'RoomsState' ,
-    default : []
-})
-
+  key: "RoomsState",
+  default: [],
+});
 
 export const SelectedUserState = atom({
-    key : 'SelectedUserState',
-    default : ''
-})
+  key: "SelectedUserState",
+  default: "",
+});
 
 export const IsConnectedState = atom({
-    key : 'IsConnectedState',
-    default : false
-})
+  key: "IsConnectedState",
+  default: false,
+});
+
+export const ParticipantsState = atom({
+  key: "ParticipantsState",
+  default: [],
+});

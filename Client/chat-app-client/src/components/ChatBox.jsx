@@ -1,22 +1,35 @@
 import "../styles/custom.css";
 import { useState, useEffect, useRef } from "react";
 import { muiExports } from "../assets/materialUI";
-import { MessagesState, SelectedUserState } from "../utils/atoms";
-import { useRecoilValue } from "recoil";
+import {
+  MessagesState,
+  SelectedUserState,
+  ParticipantsState,
+} from "../utils/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { socket } from "../utils/socket";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MessageCard from "./MessageCard";
+import ChatImage from "../assets/chatimage1.jpg";
 
-export default function ChatBox() {
+export const ChatBox = () => {
   const { Button, TextField, SendIcon } = muiExports;
 
   console.log("re-render Chatbox");
   const messages = useRecoilValue(MessagesState);
-  const selectedUser = useRecoilValue(SelectedUserState);
+  const [selectedUser, setselectedUser] = useRecoilState(SelectedUserState);
   const [currentMsg, setcurrentMsg] = useState("");
   const navigate = useNavigate();
   const chatBoxRef = useRef(null);
+  const participants = useRecoilValue(ParticipantsState);
+
+  function handleExitRoom(roomid) {
+    socket.emit("exit-room", roomid, (response) => {
+      console.log("response :", response);
+    });
+    setselectedUser("");
+  }
 
   function handleMessageSend() {
     socket.emit("room-message-client", currentMsg, selectedUser);
@@ -52,11 +65,44 @@ export default function ChatBox() {
   }, []);
 
   if (selectedUser === "") {
-    return <div className="chat-box-wrapper"> ChatBox </div>;
+    return (
+      <div className="empty-chat-box-wrapper">
+        <img className="image-cover" src={ChatImage} />
+      </div>
+    );
   }
+
+  console.log(
+    "participants : ",
+    participants
+      ?.filter((e) => e.roomid === selectedUser)[0]
+      .usernames.join(",")
+  );
 
   return (
     <div className="chat-box-wrapper">
+      <div className="chat-box-header-bar">
+        <div className="chat-box-header-bar-info">
+          <div className="chat-box-header-bar-title">{selectedUser}</div>
+          <div className="chat-box-header-bar-participants">
+            {participants
+              ?.filter((e) => e.roomid === selectedUser)[0]
+              .usernames.join(",")}
+          </div>
+        </div>
+        <div className="chat-box-header-bar-exit">
+          <Button
+            color="error"
+            variant="contained"
+            sx={{
+              marginTop: "5px",
+            }}
+            onClick={() => handleExitRoom(selectedUser)}
+          >
+            Exit Group
+          </Button>
+        </div>
+      </div>
       <div className="chat-box-inside-wrapper">
         {messages
           .filter((elem) => elem.roomid === selectedUser)
@@ -106,4 +152,4 @@ export default function ChatBox() {
       </div>
     </div>
   );
-}
+};

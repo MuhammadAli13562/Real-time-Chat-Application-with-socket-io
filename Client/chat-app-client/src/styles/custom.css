@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tektur&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 .auth-wrapper {
   display: flex;
   flex-direction: column;
@@ -14,35 +20,88 @@
 }
 
 .chat-selector-wrapper {
-  background-color: rgb(180, 79, 94);
+  background-color: rgb(99, 52, 59);
   min-width: 100px;
   max-width: 300px;
   width: 30%;
   display: flex;
   flex-direction: column;
+  height: 94.8vh;
 }
 
+.selector-buttons-wrapper {
+  height: 50%;
+  overflow-y: auto;
+}
 .chat-box-wrapper {
-  background-color: rgb(161, 37, 75);
+  background-color: rgb(43, 18, 20);
   flex: 8;
-  height: 100%;
+  height: 94.5vh;
   padding-bottom: 4px;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
 }
 
+.empty-chat-box-wrapper {
+  height: 94.8vh;
+  width: 80%;
+  background-color: rgb(90, 59, 90);
+}
+
+.image-cover {
+  width: 100%;
+  height: 100%;
+}
+
+.chat-box-header-bar {
+  background: rgb(212, 12, 12);
+  background: linear-gradient(
+    90deg,
+    rgba(212, 12, 12, 1) 0%,
+    rgba(255, 0, 95, 0.5970763305322129) 67%,
+    rgba(2, 0, 36, 1) 99%
+  );
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+
+.chat-box-header-bar-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.chat-box-header-bar-title {
+  text-indent: 10px;
+  font-size: 20px;
+  color: rgb(247, 230, 230);
+  font-family: "Russo One", sans-serif;
+}
+
+.chat-box-header-bar-participants {
+  text-indent: 10px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 18px;
+}
+
 .chat-box-inside-wrapper {
   overflow-y: auto;
-  height: 528px;
+  height: 74vh;
   padding: "5px 5px 5px 5px";
   margin-bottom: auto;
+}
+
+.message-content {
+  font-family: "Tektur", cursive;
 }
 
 .chat-selector-inner-wrapper {
   display: flex;
   flex-direction: row;
-  background-color: rgb(73, 73, 73);
+  background-color: rgb(110, 79, 79);
   margin-top: 5px;
   margin-right: 5px;
   border: none;
@@ -51,16 +110,17 @@
 .button-inner-header,
 .button-inner-content {
   display: flex;
-  color: white;
+  color: rgb(231, 92, 92);
 }
 
 .button-inner-header {
-  font-size: 15px;
+  font-size: 22px;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 .chat-selector-button {
   height: 50px;
-  background-color: rgb(73, 73, 73);
+  background-color: rgb(27, 21, 21);
   flex: 8;
   border: none;
 }
@@ -86,6 +146,10 @@
 
 .chat-selector-header {
   text-align: center;
+  color: rgb(255, 255, 255);
+  font-size: larger;
+  font-family: "Courier New", Courier, monospace;
+  padding-top: 10px;
 }
 
 .chat-box-message-form-wrapper {

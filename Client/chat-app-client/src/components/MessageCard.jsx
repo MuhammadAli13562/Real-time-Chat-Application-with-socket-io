@@ -37,7 +37,12 @@ export default function MessageCard({ msg }) {
             {date}
           </Typography>
         </div>
-        <Typography variant="p" sx={{ fontSize: 19 }} component="div">
+        <Typography
+          className="message-content"
+          variant="p"
+          sx={{ fontSize: 19 }}
+          component="div"
+        >
           {msg.content}
         </Typography>
       </CardContent>

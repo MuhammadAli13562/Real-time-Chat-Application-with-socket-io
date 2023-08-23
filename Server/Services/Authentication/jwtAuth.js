@@ -26,8 +26,8 @@ async function storeID(req, res, next) {
     //console.log('result from saving id : ', result.rows);
     next();
   } catch (error) {
-    //console.log('ERROR OCCURED WHILE STORING ID : ', error.message);
-    res.status(404).send({ error: error.message });
+    console.log("ERROR OCCURED WHILE STORING ID : ", error.message);
+    res.status(404).json({ error: error.message });
   }
 }
 
